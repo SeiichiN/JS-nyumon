@@ -206,7 +206,7 @@ ES2015 からは、document.write() の中身を `バッククォート(shiftキ
  </script>
 \end{lstlisting}
 
-\subsection{IF(条件式) \{...\} else \{...\}}
+\subsubsection{IF(条件式) \{...\} else \{...\}}
 
 下記のように書くことで条件別でアラートの内容を変更できます。
 
@@ -236,6 +236,125 @@ hensu の内容が 70以上なので、アラートにOKが表示されます。
  </script>
 \end{lstlisting}
 
+今回は hensu の値を 50 にしたので、アラートに NG と表示されました。
+
+\subsubsection{関数に IF文を書いてボタンで実行する}
+
+関数内に if文を書くことで好きなタイミングで条件式を実行できます。
+
+\begin{lstlisting}
+ <script>
+   // 関数名を kansu2 から kausu1 に変更する。
+   funcsion kansu1 () {
+     const hensu = 100;
+
+     if (hensu >= 70) {
+       window.alert('Ok');
+     } else {
+       window.alert('NG');
+     }
+   }
+ </script>
+\end{lstlisting}
+
+ボタンには \fbox{onclick=''kansu1()''} が設定されているので、クリックす
+ることでアラートを表示できるはずです。
+
+
+\subsubsection{IF文で背景色を変える}
+
+JavaScriptにはCSSと同じ効果を持つ構文があります。先ほどのIF文を次のように変更してください。
+
+\begin{lstlisting}
+ <script>
+   // 関数名を kansu2 から kausu1 に変更する。
+   funcsion kansu1 () {
+     const hensu = 100;
+
+     if (hensu >= 70) {
+       document.bgColor = 'red';
+     } else {
+       document.bgColor = 'yellow';
+     }
+   }
+ </script>
+\end{lstlisting}
+
+ページの背景色が変更されれば成功です。
+
+\subsection{反復処理}
+
+先ほどの \verb!<ul>...</ul>! 内に書いたスクリプトに戻ります。
+
+\begin{lstlisting}
+ <ul>
+   <li>HTMLで書きました</li>
+   <script>
+     const listText = 'ES2015';
+     document.write(`<li>\$\{listText\}</li>`);
+   </script>
+ </ul>
+\end{lstlisting}
+
+   \subsubsection{FOR文}
+
+今までは const を使いましたが、今度は let を使います。再代入を行うからで
+す。
+
+\begin{lstlisting}
+ <ul>
+   <li>HTMLで書きました</li>
+   <script>
+     const listText = 'ES2015';
+
+     for (let i = 0; i < 5; i++) {
+       document.write(`<li>${listText}</li>`);
+     }
+   </script>
+ </ul>
+\end{lstlisting}
+
+\fbox{for ( ... )} の中で繰り返しのための条件を記述しています。
+
+まず、\fbox{let i = 0;} で、変数i を設定し、0という初期値を代入します。
+
+次の \fbox{i \textless \ 5} で、終了条件いいかえると繰り返し条件を記述しています。i が 5 未満である間は処理を行うということです。
+
+3つめの \fbox{i++} は、プログラミング独特の記述法で、i に i+1 を代入する
+\fbox{i = i + 1} を短く記述したものです。要するに i を1増やすということです。
+
+つまり、i が 0 から 4 までの間、5回処理を繰り返すという意味です。
+
+\fbox{\includegraphics[width=10cm]{kurikaesi.png}}
+
+
+\subsubsection{FOR文を使って番号を振る}
+
+for文内で使われている変数 i は 0...5 の数字を持っています。
+これを document.write に記述することで、連番リストを作ることができます。
+コードを以下のように変更してください。
+
+\begin{lstlisting}
+ <ul>
+   <li>HTMLで書きました</li>
+   <script>
+     const listText = '';
+
+     for (let i = 0; i < 5; i++) {
+       listText = 'list' + i;
+       document.write(`<li>${listText}</li>`);
+     }
+   </script>
+ </ul>
+\end{lstlisting}
+
+うまく表示できたでしょうか？ たぶん表示しなかったはずです。
+原因を調べて みましょう。
+
+
+ブラウザ上で右クリックをして ``検証''を選択して
+
+
 \include{end}
 
-%% 修正時刻： Sat Jun 13 11:31:53 2020
+%% 修正時刻： Sat Jun 13 14:17:36 2020
