@@ -1,0 +1,28 @@
+\documentclass[dvipdfmx]{jsarticle}
+
+\include{begin}
+
+\section{DOMを操作する}
+
+ブラウザの画面に表示するために \verb!document.write(`<li>${listText}</li>`)! などと
+していましたが、document.write は その挙動の不安定さからHTML5 では \textbf{非推奨}
+となっています。
+
+では、ブラウザの画面上に文字を出力したり、\verb!<h1>! などのタグを出力したりするには
+どうするかというと、タグやid、class で構成された要素を取得し、その取得した要素に対して
+さまざまな文字を追加したり、\verb!<li>!などのタグを追加したりします。
+
+ブラウザは文章や画像などのコンテンツとHTMLの構造からなるオブジェクトで、その表現形態を
+\textbf{DOM} (Document Object Model) といいます。
+
+\textbf{DOM} は、HTMLのための''プログラミングインターフェース''と言えます。
+言い換えるなら、ウェブページを''表現、保存、操作する方法''と言えます。
+\footnote[1]{https://developer.mozilla.org/ja/docs/Web/API/Document\_Object\_Model/Introduction}
+
+
+
+
+
+\include{end}
+
+%% 修正時刻： Sat Jun 13 20:56:45 2020

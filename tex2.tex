@@ -272,9 +272,9 @@ JavaScriptにはCSSと同じ効果を持つ構文があります。先ほどのI
      const hensu = 100;
 
      if (hensu >= 70) {
-       document.bgColor = 'red';
+       document.body.style.backgroundColor = 'red';
      } else {
-       document.bgColor = 'yellow';
+       document.body.style.backgroundColor = 'yellow';
      }
    }
  </script>
@@ -291,7 +291,7 @@ JavaScriptにはCSSと同じ効果を持つ構文があります。先ほどのI
    <li>HTMLで書きました</li>
    <script>
      const listText = 'ES2015';
-     document.write(`<li>\$\{listText\}</li>`);
+     document.write(`<li>${listText}</li>`);
    </script>
  </ul>
 \end{lstlisting}
@@ -391,8 +391,206 @@ consgt を let に書き換えてください。それからブラウザを再�
 
 \fbox{\includegraphics[width=10cm]{list0-5.png}}
 
+\subsection{document.write() は非推奨}
+
+\begin{tcolorbox}[title=document.write() は非推奨]
+さて、今までブラウザの画面に文字を書き出したり、\verb!<li>!などのタグを出力したりするのに
+document.write() を使ってきましたが、実はこのメソッドは \textbf{非推奨} だったのです!
+
+ \begin{thebibliography}{9}
+  \bibitem{document_write} HTML Living Standard - document.write() \\
+          \url{https://html.spec.whatwg.org/multipage/dynamic-markup-insertion.html#document.write()}
+  \bibitem{Document.write} Document.write() - MDN \\
+          \url{https://developer.mozilla.org/ja/docs/Web/API/Document/write}
+ \end{thebibliography}
+
+ グーグル翻訳ではよくわからないのですが、どうもブラウザの動作に悪い影響を与え、想定外の描写になる
+ 可能性があるようで、代りに innerHTMLメソッド、insertAdjacentHTMLメソッド、textContentメソッドを
+ 使うとよいということです。\\
+ \verb!<li>!などのタグも含めて文字列を挿入するなら、innerHTMLが使いやすそうです。\\
+ また、単に文字列だけなら、textContentでいいと思います。\\
+ insertAdjacentHtmlはタグの挿入位置も含めて指定できます。(改訂者はあまり使っていません) \\
+ これらのメソッドは、後ほど紹介します。
+\end{tcolorbox}
+
+\subsection{SWITCH文}
+
+次の作業は、\verb!<head>!内の \verb!<script>!文で行います。
+
+\begin{lstlisting}
+ <script>
+   const hensu = 100;
+
+   if (hensu >= 70) {
+     document.body.style.backgroundColor = 'red';
+   } else {
+     document.body.style.backgroundColor = 'yellow';
+   }
+ </script>
+\end{lstlisting}
+
+\verb!<script>...</script>!内を書き換えます。
+
+\begin{lstlisting}
+ <script>
+   const hensu = 0;
+   let result = '';
+
+   switch (hensu) {
+     case 0:
+       result = '大吉';
+       break;
+     case 1:
+       result = '中吉';
+       break;
+     case 2:
+       result = '小吉';
+       break;
+     case 3:
+       result = '末吉';
+       break;
+     default:
+       result = '吉';
+    }
+
+   window.alert(result);
+ </script>
+\end{lstlisting}
+
+これを関数 kansu2() とします。
+
+\begin{lstlisting}
+ <script>
+   function kansu2 () {
+ 
+     const hensu = 0;
+     let result = '';
+
+     switch (hensu) {
+       case 0:
+         result = '大吉';
+         break;
+       case 1:
+         result = '中吉';
+         break;
+       case 2:
+         result = '小吉';
+         break;
+       case 3:
+         result = '末吉';
+         break;
+       default:
+         result = '吉';
+      }
+  
+     window.alert(result);
+   }
+   </script>
+\end{lstlisting}
+
+\verb!<h1>! は onclick属性で kansu2() を指定しているので、ブラウザで表示
+させたら \verb!<h1>!部分をクリックすると ''大吉'' と表示されます。
+
+\subsubsection{乱数を使う}
+
+さて、この kansu2()は、\fbox{ const hensu = 0; } としているので、常に大吉が表示されます。
+
+これを御神籤らしくするために、''乱数''というメソッドを使います。
+
+JavaScriptにはさまざまなオブジェクトが備わっているのですが、そのうちの一つに ''Math'' と
+いうオブジェクトがあります。これは数学で使うものが集められています。
+
+Math.random() とすると、0から1未満 の間の数値をランダムに得ることができます。(0.1 ... 0.9)
+
+Math.random() * 5 とすると、0から5未満の間の数値をランダムに得られます。(0.1 ... 4.9)
+
+kansu2 を記述していた箇所に以下のように書き加えてください。
+
+\begin{lstlisting}
+ <script>
+   function kansu2 () {
+
+     console.log( Math.random() * 5);    // <-- これ
+ 
+     const hensu = 0;
+     let result = '';
+
+     switch (hensu) {
+       case 0:
+         result = '大吉';
+         break;
+       case 1:
+         result = '中吉';
+         break;
+       case 2:
+         result = '小吉';
+         break;
+       case 3:
+         result = '末吉';
+         break;
+       default:
+         result = '吉';
+      }
+  
+     window.alert(result);
+   }
+   </script>
+\end{lstlisting}
+
+ブラウザで再読込したあと、デベロッパーツールを開いて、''console''を表示しておいてください。\\
+それから \verb!<h1>! 部分をクリックすると、''console''にその時生成された乱数が表示される
+はずです。クリックするたびに数値が変化するのがわかります。\\
+
+次に、乱数を小数値ではなく、整数にします。これは、小数点以下を切り捨ててみます。\\
+乱数を生成している部分を以下のようにしてください。
+
+\fbox{ console.log( Math.floor( Math.random() * 5 )); }
+
+小数値が整数に変ったのが確認できます。これで、準備が整いました。\verb!<script>...</script>!
+の中を以下のようにしてください。
+
+\begin{lstlisting}
+ <script>
+   function kansu2 () {
+     const hensu = Math.floor( Math.random() * 5 );
+     console.log('hensu:', hensu);
+ 
+     let result = '';
+
+     switch (hensu) {
+       case 0:
+         result = '大吉';
+         break;
+       case 1:
+         result = '中吉';
+         break;
+       case 2:
+         result = '小吉';
+         break;
+       case 3:
+         result = '末吉';
+         break;
+       default:
+         result = '吉';
+      }
+  
+     window.alert(result);
+   }
+   </script>
+\end{lstlisting}
+
+\fbox{ console.log() } は、プログラム中の変数の値がどうなっているのかを調べるのに重宝します。
+ここでは、
+\begin{verbatim}
+    console.log('hensu:', hensu);
+\end{verbatim}
+としましたが、
+\begin{verbatim}
+    console.log('hensu:' + hensu);
+\end{verbatim}
+とすることも可能です。
 
 
 \include{end}
 
-%% 修正時刻： Sat Jun 13 14:44:38 2020
+%% 修正時刻： Sat Jun 13 20:21:24 2020
