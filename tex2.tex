@@ -352,9 +352,47 @@ for文内で使われている変数 i は 0...5 の数字を持っています�
 原因を調べて みましょう。
 
 
-ブラウザ上で右クリックをして ``検証''を選択して
+ブラウザ上で右クリックをして ``検証''を選択してください。
+すると、デベロッパーツールが起動します。そして、赤い×の印が
+でているはずです。
+
+``console'' を選択すると、エラーメッセージが表示されています。
+そして、そこには
+
+\fbox{TypeError: Attempted to assign to readonly property.}
+
+というような内容が表示されているはずです。これは、
+
+\fbox{タイプエラー：読み取り専用プロパティに割当てようとしました}
+
+という意味です。
+
+そして、行番号も表示されているはずです。
+
+\fbox{ listText = 'list' + i;} の行です。
+
+このエラーは、const に再代入をしようとしたから起こったのです。
+
+consgt を let に書き換えてください。それからブラウザを再読込してください。
+
+\begin{lstlisting}
+ <ul>
+   <li>HTMLで書きました</li>
+   <script>
+     let listText = '';
+
+     for (let i = 0; i < 5; i++) {
+       listText = 'list' + i;
+       document.write(`<li>${listText}</li>`);
+     }
+   </script>
+ </ul>
+\end{lstlisting}
+
+\fbox{\includegraphics[width=10cm]{list0-5.png}}
+
 
 
 \include{end}
 
-%% 修正時刻： Sat Jun 13 14:17:36 2020
+%% 修正時刻： Sat Jun 13 14:44:38 2020
