@@ -1,0 +1,97 @@
+\documentclass[dvipdfmx]{jsarticle}
+
+\include{begin}
+
+\section{JavaScriptとは}
+
+JavaScriptは、クライアントPCのインターネットブラウザ上で動作するスクリプト言語の一種です。
+(「Java」と付いてはいますが、Javaとは全く別の言語です) \\
+JavaScriptで記述された処理は、ブラウザ上でユーザーからの動作を\textgt{イベント} として
+受け取った時に実行され、処理結果は表示されている\textgt{Webページに直接反映}されます。
+この動作はクライアント内で完結しており、\textgt{Webページを再読み込みすることなく処理が
+行われます。}
+
+\section{JavaScriptの変遷}
+
+\begin{table}[h]
+  \begin{tabular}{|p{40mm}|p{40mm}|p{70mm}|}
+   \hline
+   \multicolumn{1}{|c|}{年代} & \multicolumn{1}{|c|}{時代} & \multicolumn{1}{|c|}{概要} \\ \hline
+   1990年代後半 & 初期JS全盛期 &
+           ブラウザNetscapeに搭載。HTMLに華やかな効果を搭載したり、簡単なフォームチェックが行えるようになった。 \\ \hline
+   2000年代前半 & Flath、IE全盛期 &
+           ブラウザInternet Explorerが独自仕様のJSを搭載。Netscapeとの互換性なくなる。Flashの台頭によりJavaScriptは衰退。 \\ \hline
+   2005年 & Web2.0時代 &
+           Ajax技術の登場。GoogleマップやYouTubeなど。再びJavaScriptが注目される。 \\ \hline
+   2000年代後半 & jQueryの登場 HTML5 &
+           JavaScriptのライブラリとしてjQueryが登場。容易に動的なWebページが作れるようになる。また、HTML5が普及しだし、JavaScriptの活躍の場が広がる。 \\ \hline
+   2010年前半 & スマホの普及 &
+           iPhone、Android等のスマートフォンが登場。セキュリティ性に問題があったFlashへの対応を切り捨てたことで、Flashは衰退。代わりに HTML5 + JavaScript による動的Webページが作成されるようになる。 \\ \hline
+   2015年 & ECMAScript2015の制定 &
+           新しい時代のWeb開発に対応するため、JavaScriptの機能や文法を大幅に拡充。通称ES2015 または ES6。 \\ \hline
+   2010年代後半 & JSの多機能化 &
+           node.js の登場により、JavaScriptでサーバサイドのプログラムが組めるようになる。また、アプリケーションを作る枠組(フレームワーク)として、React.js、AngularJSなどが登場。 \\ \hline
+  \end{tabular}
+\end{table}
+
+JavaScriptとは、Webアプリケーションを作成するための根幹技術。
+
+まず、「とりあえず動かせる」「なんとなく書ける」というレベルを目指すこととします。
+
+
+\section{JavaScriptを書くための準備}
+
+\subsection{HTMLファイルの準備}
+
+以下の内容で start.html を作成してください。
+
+\begin{lstlisting}
+ <!doctype html>
+ <html lang="ja">
+ <head>
+   <meta charset="utf-8">
+   <title>JavaScript</title>
+   <link rel="stylesheet" href="style.css">
+   <script>
+
+   </script>
+ </head>
+ <body>
+   <h1 id="heading1">見出し</h1>
+   <button onclick="kansu1()">ボタン</button>
+   <ul>
+     <li>HTMLで書きました</li>
+     <!-- JSはbody内にも書ける -->
+     <script
+
+     </script>
+   </ul>
+   <img id="img1" src="images/4.jpg" alt="">
+   <!-- bodyの一番下に書く場合も多い -->
+   <script>
+
+   </script>
+ </body>
+ </html>
+\end{lstlisting}
+
+\subsection{CSSファイルの作成}
+
+''style.css''を作成します。お好きなようにデザインしてください。
+
+ \begin{lstlisting}
+  /* 画像は大きいので、300pxくらいで。 */
+  img {
+    width: 300px;
+  }
+
+  /* リンク以外のところでも、指の形になります */
+  h1, img {
+    cursor: pointer;
+  }
+  
+ \end{lstlisting}
+
+\include{end}
+
+%% 修正時刻： Sat Jun 13 07:56:46 2020

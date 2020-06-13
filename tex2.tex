@@ -1,0 +1,241 @@
+\documentclass[dvipdfmx]{jsarticle}
+
+\include{begin}
+
+\section{HTMLに直接JavaScriptを書く}
+
+\subsection{JavaScript構文}
+
+\subsubsection{window.alert();}
+
+start.html の \verb!<script>...</script>!内にJavaScriptを記述することができます。\\
+\fbox{window.alert('伝えたい内容');} でアラートウィンドウを表示できます。\\
+ブラウザの更新ボタンをクリックして確認してください。
+
+\begin{lstlisting}
+ <script>
+   window.alert(100);
+ </script>
+\end{lstlisting}
+
+数字の場合はそのままでかまいませんが、文字の場合は必ず ``''(ダブルクォーテーション)
+もしくは ''(シングルクォーテーション)で囲んでください。\\
+
+''100'' のかわりに文字を入れてみます。
+
+\begin{lstlisting}
+ <script>
+   window.alert('こんにちは');
+ </script>
+\end{lstlisting}
+
+\subsubsection{関数を書いて実行する}
+
+\fbox{function 関数名 () \{ 処理 \} } で、関数内に複数の構文を書くことができます。\\
+関数は複数の処理をまとめるのに便利です。「メソッド」と呼ばれる場合もあります。
+
+\begin{lstlisting}
+ <script>
+   function kansu1 () {
+     window.alert(100);
+   }
+ </script>
+\end{lstlisting}
+
+このままでは中の alert は実行されません。関数を実行するためには関数以外の場所で
+\fbox{関数名();} を記述して実行する必要があります。
+
+\begin{lstlisting}
+ <script>
+   function kansu1 () {
+     window.alert(100);
+   }
+   // 下記を追加。
+   kansu1();
+ </script>
+\end{lstlisting}
+
+\subsubsection{onclick=''関数名()``で実行}
+
+関数を使うことで処理を特定のタイミングで実行することができるようになります。\\
+例えば「ボタン」を押したときに関数の内容を実行させることができます。\\
+start.html の \verb!<body>! 内の \verb!<button>! タグに \\
+\hspace{5mm} \verb!<button onclick="kansu1()">! \\
+と記述してあることに注意してください。\\
+ブラウザのボタンをクリックしてアラートが表示されたら成功です。
+
+\subsection{変数}
+
+  \subsubsection{変数を設定する}
+
+JavaScriptでは、''変数''と言われる入れ物の中に好きな文字や数字等を入れることができます。\\
+ここでは、新しい関数 ''kansu2''の中に変数を入れてその内容を表示します。\\
+変数の設定には、以前は \fbox{ var 変数名; } とすることが多かったのですが、最近は
+\fbox{ const 変数名; } や \fbox{ let 変数名; } が主流です。
+
+ \begin{tcolorbox}
+  \begin{itemize}
+   \item \textbf{const} -- 一度文字や数字を入れたら、再代入できない。
+   \item \textbf{let}   -- 再代入できる。
+  \end{itemize}
+ \end{tcolorbox}
+
+たいていは再代入する必要がないので、\textgt{const}をよく使います。再代入の必要があるときは、
+\textgt{let}を使います。
+
+代入のために、''\textbf{=}''を使います。
+数学で使ったのとは意味が違うので、注意してください。
+
+\begin{lstlisting}
+ <script>
+   function kansu2 () {
+     // 変数を設定
+     const hensu = 200;
+     // 変数の内容を実行
+     window.alert(hensu);
+   }
+ </script>
+\end{lstlisting}
+
+\subsubsection{見出しをonclickして関数を実行する}
+
+\fbox{kansu2();} も何処かでクリックしないと内容が表示されません。\\
+ここでは \verb!<h1>!タグをクリックしたときに実行されるように修正します。
+
+\textbf{start.html} の \verb!<h1>!タグの部分を下記のように変更してください。
+
+\begin{verbatim}
+    <h1 id="heading1" onclick="kansu2()">ここは見出しですがボタンにもできます</h1>
+\end{verbatim}
+
+アラートに変数の内容が表示されればOKです。
+
+onclick=''''属性は、ボタン以外にもHTMLタグの中ならばどこにでも書けます。
+
+
+   \subsubsection{
+   \textless body \textgreater タグの内部に
+   \textless script \textgreater タグを書いて実行}
+
+\verb!<script>...</script>! と JavaScript は、\verb!<head>!内に書くほかに、
+\verb!<body>! タグ内に書いても問題ありません。
+
+\begin{lstlisting}
+ <ul>
+   <li>HTMLで書きました</li>
+   <!-- JSはbody内にも書ける -->
+   <script>
+
+   </script>
+ </ul>
+\end{lstlisting}
+
+\subsubsection{document.write}
+
+HTMLタグ(ここでは \verb!<li>! タグ)を、アラートではなく直接文字として表示します。
+
+HTML上にテキストを表示させるには document.write が便利です。
+
+\begin{lstlisting}
+ <ul>
+   <li>HTMLで書きました</li>
+   <!-- JSはbody内にも書ける -->
+   <script>
+     document.write("JS");
+   </script>
+ </ul>
+\end{lstlisting}
+
+document.writeはHTMLタグも記述できます。
+
+\begin{lstlisting}
+ <ul>
+   <li>HTMLで書きました</li>
+   <!-- JSはbody内にも書ける -->
+   <script>
+     document.write('<li>JS</li>');
+   </script>
+ </ul>
+\end{lstlisting}
+
+\subsubsection{変数と文字の結合}
+
+変数の内容や文字は ``+''演算子で結合できます。
+
+\begin{lstlisting}
+ <ul>
+   <li>HTMLで書きました</li>
+   <!-- JSはbody内にも書ける -->
+   <script>
+     const listText = 'JS';
+     document.write('<li>' + listText + '</li>');
+   </script>
+ </ul>
+\end{lstlisting}
+
+\subsubsection{テンプレート文字列で変数の内容を表示(ES2015)}
+
+ES2015 からは、document.write() の中身を `バッククォート(shiftキー + @) ではさむことで
+スマートに変数を表示できるようになりました。バッククォート内で展開される変数を
+''\textbf{テンプレート変数}'' と呼びます。テンプレート変数を展開するには
+ \textbf{\$\{変数名\}} と記述します。
+
+\begin{lstlisting}
+ <ul>
+   <li>HTMLで書きました</li>
+   <!-- JSはbody内にも書ける -->
+   <script>
+     const listText = 'ES2015';
+     document.write(`<li>${listText}</li>`);
+   </script>
+ </ul>
+\end{lstlisting}
+
+\subsection{条件分岐}
+
+再度、\verb!<head>!タグ内の \verb!<script>...</script>! に戻ります。
+
+\begin{lstlisting}
+ <script>
+   function kansu2 () {
+     // 変数を設定
+     const hensu = 200;
+     // 変数の内容を実行
+     window.alert(hensu);
+   }
+ </script>
+\end{lstlisting}
+
+\subsection{IF(条件式) \{...\} else \{...\}}
+
+下記のように書くことで条件別でアラートの内容を変更できます。
+
+\begin{lstlisting}
+ <script>
+   const hensu = 100;
+   // if文
+   if (hensu >= 70) {
+     window.alert('OK');
+   }
+ </script>
+\end{lstlisting}
+
+hensu の内容が 70以上なので、アラートにOKが表示されます。
+
+また、次のように条件を満さなかった場合も記述することもできます。
+
+\begin{lstlisting}
+ <script>
+   const hensu = 50;
+   // if文
+   if (hensu >= 70) {
+     window.alert('OK');
+   } else {
+     window.alert('NG');
+   }
+ </script>
+\end{lstlisting}
+
+\include{end}
+
+%% 修正時刻： Sat Jun 13 11:31:53 2020
