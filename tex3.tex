@@ -30,7 +30,7 @@ onclick属性をつけたことで、この画像をクリックすると ''kans
 
 \footnote[2]{ onclick -- HTMLのタグの中に JavaScript の記述を入れることを嫌がる人もいます。HTMLを汚すからというわけです。たしかにここで onclick を使わなくても JavaScriptの文中でクリックイベントを検知するやり方はいくつかあります。このあたりはポリシーの問題だと思います。もっとも、onclick の記述が必要な箇所が多数あるのであれば、いちいち onclick を記述せずとも、JavaScript文中で他の方法を使ったほうが楽だし、間違いも少くてすみます。}
 
-さて、この kansu3という関数をどこに書くかですが、\verb!</body>! タグの直前の \verb!<script>...</script> 内に記述します。これは、\verb!<img>! などのbody要素の中身すべてを読み込んだあとに記述するという意味があります。これは、JavaScript文中で bodyの中のタグ名、id名、class名などを使用するということです。
+さて、この kansu3という関数をどこに書くかですが、\verb!</body>! タグの直前の \verb!<script>...</script>! 内に記述します。これは、\verb!<img>! などのbody要素の中身すべてを読み込んだあとに記述するという意味があります。これは、JavaScript文中で bodyの中のタグ名、id名、class名などを使用するということです。
 
 以下のように kansu3 の内容を書いてください。
 
@@ -173,8 +173,93 @@ class で指定された要素を取得するには \fbox{.getElementsByClassNam
   </script>
  \end{lstlisting}
 
+ ちょっと日付が見づらいので、少々変えます。\\
+ Dateオブジェクトから時、分、秒を別々に取り出して表示します。
+
+ \begin{lstlisting}
+  <script>
+    const hiduke = new Date();
+    const jikan = hiduke.getHours();
+    const fun = hiduke.getMinutes();
+    const byo = hiduke.getSeconds();
+  
+    const timeText = document.getElementById('heading1');
+    timeText.insertAdjacentHTML('afterend', `<time>${jikan}:${fun}:${byo}</time>`);
+  </script>
+ \end{lstlisting}
  
+ \section{JavaScriptを外部ファイルにする}
+ 今まではHTMLの中にJavaScriptの文を書いていましたが、冗長になるし、ごちゃ
+ ごちゃします。CSSファイルと同じようにJavaScriptも外部ファイルにして読み
+ 込むことができます。
+
+ よく見かけるやり方は、''js''などの名前でフォルダを作成し、そのフォルダ
+ をJavaScript専用にするというものです。\\
+
+ まず、''js''フォルダを作成します。そして、その中に、たとえば ''start.js''
+ という名前で、新規にテキストファイルを作成します。\\
+ そのファイルの中に、\verb!<script>...</script>!の中の文を移動します。
+
+ 最初に、\verb!<head>...</head>! の中のものを移動します。\verb!<script>! というタグは
+ 必要ありません。その中だけでいいです。
+ その次は、\verb!<ul>...</ul>! の中の \verb!<script>! ですが、これはそのままにしておいてください。
+ 最後に \verb!</body>! の手前に記述した \verb!<script>! の中の文を移動します。
+
+ このようになっているはずです。
+
+ \begin{lstlisting}
+  function kansu2 () {
+    const hensu = Math.floor( Math.random() * 5 );
+    console.log('hensu:',  hensu);
+    let result = '';
+
+    switch (hensu) {
+      case 0:
+        result = '大吉';
+        break;
+      case 1:
+        result = '中吉';
+        break;
+      case 2:
+        result = '小吉';
+        break;
+      case 3:
+        result = '末吉';
+        break;
+      default:
+        result = '吉';
+    }
+
+    window.alert(result);
+  }
+
+  const hiduke = new Date();
+  const jikan = hiduke.getHours();
+  const fun = hiduke.getMinutes();
+  const byo = hiduke.getSeconds();
+  const timeText = document.getElementById('heading1');
+  // timeText.textContent = hiduke;
+  // timeText.innerHTML = hiduke;
+  // timeText.innerHTML = `<time>${hiduke}</time>`;
+  timeText.insertAdjacentHTML('afterend',
+      `<p><time>${jikan}:${fun}:${byo}</time></p>`);
+ \end{lstlisting}
+
+
+ start.html の中の \verb!<script> ... </script>! は全部無くしてください。
+
+ そして、\verb!</body>! のところを以下のようにします。
+
+ \begin{lstlisting}
+        ...( 省略 )...
+      <script src="js/start.js"></script>
+    </body>
+  </html>
+ \end{lstlisting}
+
+
+
  
 \include{end}
 
-%% 修正時刻： Sun Jun 14 13:40:02 2020
+%% 修正時刻： Sun Jun 14 20:36:04 2020
